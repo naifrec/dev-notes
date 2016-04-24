@@ -292,3 +292,209 @@ let values = [25, 50, 75, 100]
 // console.log(Math.max(25, 50, 75, 100));
 console.log(Math.max(...values));           // 100
 ```
+
+#### 2.3.4 Arrow Functions
+Arrow functions are, as the name suggests, functions defined with a new syntax that uses an “arrow” (=>).
+But arrow functions behave differently than traditional JavaScript functions in a number of important ways:
+
+- **No `this`, `super`, `arguments`, and `new.target` bindings** - The value of this, super, arguments, and new.target inside of the function is by the closest containing nonarrow function. (super is covered in Chapter 4.)
+- **Cannot be called with `new`** - Arrow functions do not have a [[Construct]] method and therefore cannot be used as constructors. Arrow functions throw an error when used with new.
+- **No `prototype`** - since you can’t use new on an arrow function, there’s no need for a prototype. The prototype property of an arrow function doesn’t exist.
+- **Can’t change `this`** - The value of this inside of the function can’t be changed. It remains the same throughout the entire lifecycle of the function.
+- **No arguments `object`** - Since arrow functions have no arguments binding, you must rely on named and rest parameters to access function arguments..
+- **No duplicate named `arguments`** - arrow functions cannot have duplicate named arguments in strict or nonstrict mode, as opposed to nonarrow functions that cannot have duplicate named arguments only in strict mode.
+
+The syntax differs slightly depending on input/output, here are the regular cases:
+
+Single argument, simple output, no brackets whatsoever
+```
+var reflect = value => value;
+
+// effectively equivalent to:
+
+var reflect = function(value) {
+    return value;
+};
+```
+Multiple parentheses are put between brackets:
+```
+var sum = (num1, num2) => num1 + num2;
+
+// effectively equivalent to:
+
+var sum = function(num1, num2) {
+    return num1 + num2;
+};
+```
+No arguments lead to empty parentheses:
+```
+var getName = () => "Nicholas";
+
+// effectively equivalent to:
+
+var getName = function() {
+    return "Nicholas";
+};
+```
+A function that returns nothing need empty curly braces:
+```
+var doNothing = () => {};
+
+// effectively equivalent to:
+
+var doNothing = function() {};
+```
+If you want to return an object literal (itself between curly braces) then you need to wrap the braces into parentheses:
+```
+var getTempItem = id => ({ id: id, name: "Temp" });
+
+// effectively equivalent to:
+
+var getTempItem = function(id) {
+
+    return {
+        id: id,
+        name: "Temp"
+    };
+};
+```
+If you have a multiline body for your arrow function then you need to explicitely use `return`.
+The main difference of this body to the body of regular function is that `arguments` does not exist and
+is hence not accessible.
+```
+var sum = (num1, num2) => {
+    return num1 + num2;
+};
+```
+Arrow functions **cannot be used with `new`**. Knowing that arrow functions cannot be used with new allows JavaScript engines to further optimize their behavior.
+The biggest change to functions in ECMAScript 6 was the addition of arrow functions. Arrow functions are **designed to be used in place of anonymous function expressions**. Arrow functions have a more concise syntax, lexical this binding, and no arguments object. Additionally, arrow functions can’t change their this binding, and so can’t be used as constructors.
+
+### 2.4 Expanded object functionality
+#### 2.4.1 Concise syntax
+Concise syntax was introduced in ECMAScript 6. For example,  you can **eliminate the duplication that exists around property names and local variables** by using the property initializer shorthand.
+
+```
+// Former syntax
+function createPerson(name, age) {
+    return {
+        name: name,
+        age: age
+    };
+}
+
+// Concise syntax
+function createPerson(name, age) {
+    return {
+        name,
+        age
+    };
+}
+```
+There is also a new way to **assign methods to object literals**:
+```
+// Former syntax
+var person = {
+    name: "Nicholas",
+    sayName: function() {
+        console.log(this.name);
+    }
+};
+
+// New syntax
+var person = {
+    name: "Nicholas",
+    sayName() {
+        console.log(this.name);
+    }
+};
+```
+The one difference is that **concise methods may use `super`**, while the nonconcise methods may not.
+
+#### 2.4.2 Computed property names
+The square brackets inside the object literal indicate that the property name is computed,
+so its contents are evaluated as a string. That means you can also include expressions such as:
+```
+var suffix = " name";
+
+var person = {
+    ["first" + suffix]: "Nicholas",
+    ["last" + suffix]: "Zakas"
+};
+
+console.log(person["first name"]);      // "Nicholas"
+console.log(person["last name"]);       // "Zakas"
+```
+
+#### 2.4.3 The Object.is() method
+To compare two values in JavaScript, we usually use either the equals operator (`==`) or the identically equals operator (`===`).
+Many developers prefer the latter, to avoid type coercion during comparison.
+But **even the identically equals operator isn’t entirely accurate**. For example, the values +0 and -0 are considered equal by === even though they are represented differently in the JavaScript engine. Also `NaN === NaN` returns false, which necessitates using `isNaN()` to detect NaN properly.
+
+ECMAScript 6 introduces the **`Object.is()` method to make up for the remaining quirks of the identically equals operator**. This method accepts two arguments and returns true if the values are equivalent. Two values are considered equivalent when they are of the same type and have the same value. Here are some examples:
+
+```
+console.log(+0 == -0);              // true
+console.log(+0 === -0);             // true
+console.log(Object.is(+0, -0));     // false
+
+console.log(NaN == NaN);            // false
+console.log(NaN === NaN);           // false
+console.log(Object.is(NaN, NaN));   // true
+
+console.log(5 == 5);                // true
+console.log(5 == "5");              // true
+console.log(5 === 5);               // true
+console.log(5 === "5");             // false
+console.log(Object.is(5, 5));       // true
+console.log(Object.is(5, "5"));     // false
+```
+In many cases, `Object.is()` works the same as the `===` operator. The only differences are that +0 and -0 are considered not equivalent and NaN is considered equivalent to NaN. But there’s no need to stop using equality operators altogether. **Choose whether to use `Object.is()` instead of `==` or `===` based on how those special cases affect your code.**
+
+#### 2.4.4 The Object.assign() method
+Mixins are among the most popular patterns for object composition in JavaScript. In a mixin, one object receives properties and methods from another object. Many JavaScript libraries have a mixin method similar to this:
+
+```
+function mixin(receiver, supplier) {
+    Object.keys(supplier).forEach(function(key) {
+        receiver[key] = supplier[key];
+    });
+
+    return receiver;
+}
+```
+The `mixin()` function iterates over the own properties of supplier and copies them onto receiver (a shallow copy, where object references are shared when property values are objects). This allows the receiver to gain new properties without inheritance, as in this code:
+
+```
+function EventTarget() { /*...*/ }
+EventTarget.prototype = {
+    constructor: EventTarget,
+    emit: function() { /*...*/ },
+    on: function() { /*...*/ }
+};
+
+var myObject = {};
+mixin(myObject, EventTarget.prototype);
+
+myObject.emit("somethingChanged");
+```
+Here, `myObject` receives behavior from the `EventTarget.prototype` object. This gives `myObject` the ability to publish events and subscribe to them using the `emit()` and `on()` methods, respectively.
+
+This pattern became popular enough that ECMAScript 6 added the **`Object.assign()` method, which behaves the same way**. The name change from `mixin()` to `assign()` reflects the actual operation that occurs. Since the `mixin()` method uses the assignment operator (=), it cannot copy accessor properties to the receiver as accessor properties. The name Object.assign() was chosen to reflect this distinction. Example of use:
+
+```
+function EventTarget() { /*...*/ }
+EventTarget.prototype = {
+    constructor: EventTarget,
+    emit: function() { /*...*/ },
+    on: function() { /*...*/ }
+}
+
+var myObject = {}
+Object.assign(myObject, EventTarget.prototype);
+
+myObject.emit("somethingChanged");
+```
+
+#### 2.4.5 Object prototype
+**Prototypes are the foundation of inheritance in JavaScript**, and ECMAScript 6 continues to make prototypes
+ more powerful. Early versions of JavaScript severely limited what could be done with prototypes.
