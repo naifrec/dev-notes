@@ -1,0 +1,50 @@
+scyfernn:
+  title: "scyfernn"
+  paths: [
+    "/home/guillaume/scyfer/scyfernn"
+    "/home/guillaume/scyfer/fuel"
+  ]
+fichesegmentation:
+  title: "fichesegmentation"
+  paths: [
+    "/home/guillaume/scyfer/fichesegmentation"
+    "/home/guillaume/scyfer/scyfernn"
+    "/home/guillaume/scyfer/fuel"
+  ]
+tapenoise:
+  title: "tapenoise"
+  paths: [
+    "/home/guillaume/hackathon/tape-noise-cancellation"
+    "/home/guillaume/scyfer/fichesegmentation"
+    "/home/guillaume/scyfer/scyfernn"
+  ]
+dashboard:
+  title: "dashboard"
+  paths: [
+    "/home/guillaume/scyfer/dashboard"
+    "/home/guillaume/scyfer/scyfernn"
+  ]
+colorprediction:
+  title: "colorprediction"
+  paths: [
+    "/home/guillaume/scyfer/colorprediction"
+    "/home/guillaume/scyfer/scyfernn"
+    "/home/guillaume/scyfer/fuel"
+  ]
+annotation:
+  title: "annotation"
+  paths: [
+    "/home/guillaume/projects/annotation-tool"
+    "/home/guillaume/projects/dev-notes"
+  ]
+colorsearch:
+  title: "colorsearch"
+  paths: [
+    "/home/guillaume/paracusia/color-search"
+    "/home/guillaume/scyfer/scyfernn"
+  ]
+devnotes:
+  title: "devnotes"
+  paths: [
+    "/home/guillaume/scyfer/dev-notes"
+  ]

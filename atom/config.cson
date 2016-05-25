@@ -1,0 +1,30 @@
+"*":
+  Hydrogen:
+    kernelspec: "{\"kernelspecs\":{\"python2\":{\"resource_dir\":\"/home/guillaume/.local/lib/python2.7/site-packages/ipykernel/resources\",\"spec\":{\"language\":\"python\",\"display_name\":\"Python 2\",\"env\":{},\"argv\":[\"/usr/bin/python\",\"-m\",\"ipykernel\",\"-f\",\"{connection_file}\"]}}}}"
+  "atom-beautify":
+    _analyticsUserId: "87256f2c-1a97-4337-a036-edd81b5e3f0a"
+    general:
+      _analyticsUserId: "64c11d2c-8b03-4fb9-b99a-9276ba5cf334"
+  core:
+    packagesWithKeymapsDisabled: [
+      "doge"
+    ]
+  editor:
+    invisibles: {}
+    preferredLineLength: 79
+  "exception-reporting":
+    userId: "13c1594f-ff61-5a3f-4754-b6ec3507e555"
+  linter:
+    errorPanelHeight: 46
+  "linter-pep8": {}
+  "merge-conflicts": {}
+  pigments:
+    markerType: "dot"
+  "project-manager":
+    closeCurrent: true
+  "python-autopep8": {}
+  "python-iresolve": {}
+  "tree-view":
+    hideVcsIgnoredFiles: true
+  welcome:
+    showOnStartup: false
