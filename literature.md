@@ -7,6 +7,8 @@ This markdown is dedicated to summing up interesting points from literature:
 
 ## Adding Gradient Noise Improves Learning for Very Deep Networks
 
+Paper: http://arxiv.org/abs/1511.06807
+
 ### Technique
 
 Adding time-dependent Gaussian noise to the gradient g at every
