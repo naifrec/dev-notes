@@ -16,6 +16,6 @@ Then install python3.6:
 brew install python3
 ```
 
-
 Make sure `/usr/local/bin` appears on top of `/usr/bin` in `/etc/paths`,
-then create a symlink to python3 using the command `ln -s /usr/local/bin/python3.6 /usr/local/bin/python`
+then create a symlink to python3 using the command `ln -s /usr/local/bin/python3.6 /usr/local/bin/python`.
+Do not forget to do the same trick for `pip` to default to `pip3`.
